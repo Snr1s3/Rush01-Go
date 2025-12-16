@@ -148,22 +148,35 @@ func ColVisibility(col int) bool {
 	return (Views[0][col] == 0 || Views[0][col] == VisiTop) && (Views[1][col] == 0 || Views[1][col] == VisiBot)
 }
 func PrintMap() {
-	fmt.Print("  ")
+	fmt.Print("     ")
 	for c := 0; c < Cols; c++ {
-		fmt.Print(Views[0][c], " ")
+		fmt.Printf("%d   ", Views[0][c])
+	}
+	fmt.Println()
+	fmt.Print("   +")
+	for c := 0; c < Cols; c++ {
+		fmt.Print("---+")
 	}
 	fmt.Println()
 	for r := 0; r < Rows; r++ {
-		fmt.Print(Views[2][r], " ")
+		fmt.Printf(" %d |", Views[2][r])
 		for c := 0; c < Cols; c++ {
-			fmt.Print(Map[r][c], " ")
+			if Map[r][c] == 0 {
+				fmt.Print("   |")
+			} else {
+				fmt.Printf(" %d |", Map[r][c])
+			}
 		}
-		fmt.Print(Views[3][r])
+		fmt.Printf(" %d\n", Views[3][r])
+		fmt.Print("   +")
+		for c := 0; c < Cols; c++ {
+			fmt.Print("---+")
+		}
 		fmt.Println()
 	}
-	fmt.Print("  ")
+	fmt.Print("     ")
 	for c := 0; c < Cols; c++ {
-		fmt.Print(Views[1][c], " ")
+		fmt.Printf("%d   ", Views[1][c])
 	}
 	fmt.Println()
 }
