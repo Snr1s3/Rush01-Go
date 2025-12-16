@@ -4,7 +4,7 @@ A Go implementation of the classic "Skyscraper" (Rush01) puzzle solver, inspired
 
 ## Overview
 
-This project demonstrates solving the Rush01 (Skyscraper) puzzle using Go. The puzzle consists of filling a 4x4 grid with numbers 1-4 so that:
+This project demonstrates solving the Rush01 (Skyscraper) puzzle using Go. The puzzle consists of filling an NxN grid (4x4, 5x5, or 6x6) with numbers 1-N so that:
 
 - Each row and column contains each number exactly once.
 - Clues around the grid indicate how many skyscrapers are visible from that direction.
@@ -12,6 +12,7 @@ This project demonstrates solving the Rush01 (Skyscraper) puzzle using Go. The p
 ## Features
 
 - Command-line interface for inputting clues.
+- Supports 4x4, 5x5, and 6x6 grids.
 - Step-by-step board printing for debugging and learning.
 - Modular code structure for clarity and maintainability.
 
@@ -33,17 +34,34 @@ go run rush01.go solver.go <clues>
 
 ### Input Format
 
-Clues must be provided as a **single 16-digit string** in this order:
+Clues must be provided as a **single string of digits** in this order:
 
-1. Top clues (left to right) — 4 digits  
-2. Bottom clues (left to right) — 4 digits  
-3. Left clues (top to bottom) — 4 digits  
-4. Right clues (top to bottom) — 4 digits  
+1. Top clues (left to right)  
+2. Bottom clues (left to right)  
+3. Left clues (top to bottom)  
+4. Right clues (top to bottom)  
 
-**Example:**
+**Accepted lengths:**
+- 16 digits for 4x4
+- 20 digits for 5x5
+- 24 digits for 6x6
+
+**Example for 4x4:**
 
 ```sh
 go run . 4132234214321234
+```
+
+**Example for 5x5:**
+
+```sh
+go run . 33212133024321332132
+```
+
+**Example for 6x6:**
+
+```sh
+go run . 234321234321234321234321
 ```
 
 ### Example Output

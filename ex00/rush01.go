@@ -8,8 +8,7 @@ import (
 
 var Views [][]int
 var Map [][]int
-var Rows int = 4
-var Cols int = 4
+var NUM int = 4
 
 func main() {
 	if len(os.Args) != 2 {
@@ -17,12 +16,25 @@ func main() {
 		return
 	}
 	clues := os.Args[1]
-	if len(clues) != 16 {
-		fmt.Println("Clue string must be 16 digits")
+	if len(clues) != 16 && len(clues) != 20 && len(clues) != 24 {
+		fmt.Println("Clue string must be 16/20/24 digits")
 		return
 	}
-	input := make([]string, 16)
-	for i := 0; i < 16; i++ {
+	var input []string
+	if len(clues) == 16 {
+		input = make([]string, 16)
+		NUM = 4
+	} else if len(clues) == 20 {
+		input = make([]string, 20)
+		NUM = 5
+	} else if len(clues) == 24 {
+		input = make([]string, 24)
+		NUM = 6
+	} else {
+		fmt.Println("Clue string must be 16/20/24 digits")
+		return
+	}
+	for i := 0; i < NUM*4; i++ {
 		input[i] = string(clues[i])
 	}
 	if !Allocate(input) {
@@ -40,22 +52,22 @@ func main() {
 }
 func Allocate(input []string) bool {
 	fmt.Println("Allocating Arrays in Memory")
-	Map = make([][]int, Rows)
+	Map = make([][]int, NUM)
 	for i := range Map {
-		Map[i] = make([]int, Cols)
+		Map[i] = make([]int, NUM)
 		for j := range Map[i] {
 			Map[i][j] = 0
 		}
 	}
 	Views = make([][]int, 4)
 	for i := range Views {
-		Views[i] = make([]int, Cols)
+		Views[i] = make([]int, NUM)
 	}
 	count := 0
-	for i := 0; i < Rows; i++ {
-		for j := 0; j < Cols; j++ {
+	for i := 0; i < 4; i++ {
+		for j := 0; j < NUM; j++ {
 			val, err := strconv.Atoi(input[count])
-			if err != nil || val > 4 || val < 1 {
+			if err != nil || val > NUM || val < 1 {
 				fmt.Printf("Invalid integer: %s\n", input[count])
 				return false
 			}
@@ -73,9 +85,9 @@ func PrintMap() {
 	PrintTopBotViews(1)
 }
 func PrintMiddle() {
-	for r := 0; r < Rows; r++ {
+	for r := 0; r < NUM; r++ {
 		fmt.Printf(" %d |", Views[2][r])
-		for c := 0; c < Cols; c++ {
+		for c := 0; c < NUM; c++ {
 			if Map[r][c] == 0 {
 				fmt.Print("   |")
 			} else {
@@ -88,14 +100,14 @@ func PrintMiddle() {
 }
 func PrintTopBotLine() {
 	fmt.Print("   +")
-	for c := 0; c < Cols; c++ {
+	for c := 0; c < NUM; c++ {
 		fmt.Print("---+")
 	}
 	fmt.Println()
 }
 func PrintTopBotViews(view int) {
 	fmt.Print("     ")
-	for c := 0; c < Cols; c++ {
+	for c := 0; c < NUM; c++ {
 		fmt.Printf("%d   ", Views[view][c])
 	}
 	fmt.Println()
